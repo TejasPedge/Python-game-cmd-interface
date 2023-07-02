@@ -1,77 +1,112 @@
 import random
 
-def get_user_choice():
-    while True:
-        print("Enter your choice: ")
-        print("1. Rock")
-        print("2. Paper")
-        print("3. Scissors")
-        print("4. Quit")
+def determine_winner (users_choice,computers_coice) :
+    
+    if users_choice == computers_coice :
+        return 'draw'
+    
+    if(
+        (users_choice == 'rock' and computers_coice == 'scissor') or
+        (users_choice == 'paper' and computers_coice == 'rock') or
+        (users_choice == 'scissor' and computers_coice == 'paper')
+        ) :
 
-        choice = input("Your choice (1-4): ")
-        if choice.isdigit():
-            choice = int(choice)
-            if choice >= 1 and choice <= 4:
-                return choice
-        print("Invalid choice. Please try again.")
+        return 'user'
+    
+    else :
+        return "computer"
 
-def get_computer_choice():
-    choices = ["Rock", "Paper", "Scissors"]
-    return random.choice(choices)
 
-def determine_winner(user_choice, computer_choice):
-    if user_choice == computer_choice:
-        return "Draw"
-    elif (user_choice == "Rock" and computer_choice == "Scissors") or (user_choice == "Paper" and computer_choice == "Rock") or (user_choice == "Scissors" and computer_choice == "Paper"):
-        return "User"
-    else:
-        return "Computer"
+def play() :
 
-def display_result(user_choice, computer_choice, winner):
-    print("User chose:", user_choice)
-    print("Computer chose:", computer_choice)
-    if winner == "Draw":
-        print("It's a draw!")
-    else:
-        print(f"{winner} wins!")
+    scores = {'user' : 0, 'computer' : 0, 'draw' : 0}
+    choices = ['rock', 'paper', 'scissor']
 
-def update_scores(scores, winner):
-    if winner == "User":
-        scores["User"] += 1
-    elif winner == "Computer":
-        scores["Computer"] += 1
-    else:
-        scores["Draws"] += 1
+    print()
+    print('           ===============================================')
+    print()
+    print('                \033[32m🥌 🎮 🕹️  WELCOME TO THE GAME 🥌 🎮 🕹️\033[0m     ')
+    print()
+    print('           ===============================================     ')
+    
 
-def display_scores(scores):
-    print("----- Scores -----")
-    print(f"User: {scores['User']}")
-    print(f"Computer: {scores['Computer']}")
-    print(f"Draws: {scores['Draws']}")
-    print("------------------")
+    while (True) :
+        print()
+        print('                         choose your object                     ')
 
-def play_game():
-    scores = {"User": 0, "Computer": 0, "Draws": 0}
-
-    print("Welcome to Rock, Paper, Scissors Game!")
-
-    while True:
-        user_choice = get_user_choice()
-
-        if user_choice == 4:
-            print("Thanks for playing!")
-            break
-
-        user_choice = ["Rock", "Paper", "Scissors"][user_choice - 1]
-        computer_choice = get_computer_choice()
-
-        winner = determine_winner(user_choice, computer_choice)
-
-        display_result(user_choice, computer_choice, winner)
-
-        update_scores(scores, winner)
-
-        display_scores(scores)
+        print()
+        print('__________________________________________________________________')
+        print('|                                                                 |')
+        print('|                                                                 |')
+        print('|     --------------      --------------     --------------       |')
+        print('|         Rock 🪨            Paper 📃           Scissor ✂️          |')
+        print('|     --------------      --------------     --------------       |')
+        print('|                                                                 |')
+        print('|_________________________________________________________________|')
+        print('                       |                   |')
+        print('                       |  press Q to exit  |')
+        print('                       |___________________|')
+        print()
         print()
 
-play_game()
+        users_choice = input("\033[37m\033[1mEnter Your Choice 🌍 :\033[0m ").lower().strip()
+
+        if(users_choice == 'q') :
+            break
+
+        if(users_choice not in choices) :
+            print()
+            print('❌ Invalid choice please try again ⚠️');
+            print()
+            print('--------------------------------------------------------')
+            continue
+
+        computer_choice = random.choice(choices)
+
+        print()
+        print('Your choice :',users_choice)
+        print()
+        print('Computers Choice 🖥️  :',computer_choice)
+        print()
+
+        winner = determine_winner(users_choice,computer_choice)
+
+        if(winner == 'draw') :
+            print('--------------------------------------------------------')
+            print("          📍 It's a Draw! Match again 📍")
+            print('--------------------------------------------------------')
+            scores['draw'] += 1
+            continue
+
+        print('--------------------------------------------------------')
+        print('     🥳 🍾 🎆 and the winner is 🥳 🍾 🎆 :',winner)
+        print('--------------------------------------------------------')
+
+
+        scores[winner] += 1
+        print()
+        print('\033[37m\033[1mSCORES :\033[0m')
+        print()
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print()
+        print('      USER              COMPUTER              DRAW')
+        print()
+        print(f'        {scores["user"]}                   {scores["computer"]}                   {scores["draw"]}')
+        print()
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print()
+
+
+play()
+
+
+
+
+
+
+
+
+
+
+
+
